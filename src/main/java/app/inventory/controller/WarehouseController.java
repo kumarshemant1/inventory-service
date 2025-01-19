@@ -50,9 +50,7 @@ public class WarehouseController {
 	@PutMapping(path = "/{warehouseId}")
 	public ResponseEntity<Warehouse> updateWarehouse(@PathVariable Long warehouseId, @RequestBody @Valid Warehouse warehouse) {
 		if(!warehouseId.equals(warehouse.getWarehouseId())) {
-			return ResponseEntity
-					.status(HttpStatus.BAD_REQUEST)
-					.body(null);
+			
 		} 
 		Warehouse repsonse = warehouseService.updateWarehouse(warehouse);
 		return ResponseEntity
