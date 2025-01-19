@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.inventory.entity.Warehouse;
+import app.inventory.service.WarehouseService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -24,34 +25,49 @@ import jakarta.validation.Valid;
 @RequestMapping(path = "/warehouse", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 public class WarehouseController {
 
-	@PostMapping()
+	private WarehouseService warehouseService;
+
+	public WarehouseController(WarehouseService warehouseService) {
+		this.warehouseService = warehouseService;
+	}
+
+	@PostMapping
 	public ResponseEntity<Warehouse> createWarehouse(@RequestBody @Valid Warehouse warehouse) {
+		Warehouse response = warehouseService.createWarehouse(warehouse);
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
-				.body(new Warehouse());
+				.body(response);
 	}
-	
+
 	@GetMapping(path = "/{warehouseId}")
 	public ResponseEntity<Warehouse> getWarehouse(@PathVariable Long warehouseId) {
+		Warehouse response = warehouseService.getWarehouse(warehouseId);
 		return ResponseEntity
 				.status(HttpStatus.OK)
-				.body(new Warehouse());
+				.body(response);
 	}
-	
+
 	@PutMapping(path = "/{warehouseId}")
 	public ResponseEntity<Warehouse> updateWarehouse(@PathVariable Long warehouseId, @RequestBody @Valid Warehouse warehouse) {
+		if(!warehouseId.equals(warehouse.getWarehouseId())) {
+			return ResponseEntity
+					.status(HttpStatus.BAD_REQUEST)
+					.body(null);
+		} 
+		Warehouse repsonse = warehouseService.updateWarehouse(warehouse);
 		return ResponseEntity
 				.status(HttpStatus.OK)
-				.body(new Warehouse());
+				.body(repsonse);
 	}
-	
+
 	@DeleteMapping(path = "/{warehouseIds}")
 	public ResponseEntity<Integer> deleteWarehouses(@PathVariable List<Long> warehouseIds) {
+		Integer response = warehouseService.deleteWarehouses(warehouseIds);
 		return ResponseEntity
 				.status(HttpStatus.OK)
-				.body(5);
+				.body(response);
 	}
-	
+
 	@GetMapping(path = "/fetch")
 	public String getByPage(@RequestParam(value = "page", defaultValue = "2") int page, 
 			@RequestParam(value = "limit", required = false) Integer limit) {
