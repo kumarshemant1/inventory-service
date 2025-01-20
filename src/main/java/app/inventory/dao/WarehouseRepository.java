@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import app.inventory.entity.Warehouse;
 
 @Repository
-public interface WarehouseRepository extends JpaRepository<Warehouse, Long>{
+public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
 
 }
