@@ -1,10 +1,13 @@
 package app.inventory.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import app.inventory.dao.WarehouseRepository;
 import app.inventory.entity.Warehouse;
+import app.inventory.exception.WarehouseNotFoundException;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -19,8 +22,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
 	@Override
 	public Warehouse createWarehouse(@NotNull Warehouse warehouse) {
-		Warehouse response = warehouseRepository.save(warehouse);
-		return response;
+		return warehouseRepository.save(warehouse);
 	}
 
 	@Override
@@ -32,19 +34,21 @@ public class WarehouseServiceImpl implements WarehouseService {
 
 	@Override
 	public Warehouse updateWarehouse(@NotNull Warehouse warehouse) {
-		Optional<Warehouse> existingObject = getWarehouse(warehouse.getWarehouseId());
-		Warehouse persistObject = new Warehouse();
-		persistObject.setWarehouseId();
-		persistObject.setWarehouseName();
-		return warehouseRepository.save(persistObject);
+		Warehouse response = null;
+		Optional<Warehouse> existingWarehouse = warehouseRepository.findById(warehouse.getWarehouseId());
+		if(existingWarehouse.isPresent()) {
+			Warehouse persistWarehouse = existingWarehouse.get().clone();
+			persistWarehouse.setWarehouseName(warehouse.getWarehouseName());
+			persistWarehouse.setFunctional(warehouse.isFunctional());
+			persistWarehouse.setChangedBy(warehouse.getChangedBy());
+			
+			response = warehouseRepository.save(persistWarehouse);
+		}
+		return response;
 	}
 
 	@Override
 	public Integer deleteWarehouses(@NotEmpty List<Long> warehouseIds) {
-		
-		return null;
+		return warehouseRepository.deleteByWarehouseIdIn(warehouseIds);
 	}
-
-	
-
 }

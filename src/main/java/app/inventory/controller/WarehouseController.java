@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.inventory.entity.Warehouse;
+import app.inventory.exception.WarehouseIdMismatchException;
 import app.inventory.service.WarehouseService;
 import jakarta.validation.Valid;
 
@@ -50,7 +51,7 @@ public class WarehouseController {
 	@PutMapping(path = "/{warehouseId}")
 	public ResponseEntity<Warehouse> updateWarehouse(@PathVariable Long warehouseId, @RequestBody @Valid Warehouse warehouse) {
 		if(!warehouseId.equals(warehouse.getWarehouseId())) {
-			
+			throw new WarehouseIdMismatchException("warehouseId of path variable doesn't match the warehouseId of the warehouse object payload");
 		} 
 		Warehouse repsonse = warehouseService.updateWarehouse(warehouse);
 		return ResponseEntity
