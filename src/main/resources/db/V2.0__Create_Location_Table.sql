@@ -23,9 +23,9 @@ street citext NOT NULL,
 city citext NOT NULL,
 pincode varchar(10) NOT NULL,
 country country_enum NOT NULL,
-createdBy text DEFAULT 'SYSTEM',
-createdAt timestamp DEFAULT now(),
-changedBy text DEFAULT 'SYSTEM',
-changedAt timestamp DEFAULT now(),
+created_by text DEFAULT 'SYSTEM',
+created_at timestamp DEFAULT now(),
+changed_by text DEFAULT 'SYSTEM',
+changed_at timestamp DEFAULT now(),
 CONSTRAINT "unique_key_latitude_longitude" UNIQUE (latitude, longitude)
 );
