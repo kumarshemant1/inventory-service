@@ -4,15 +4,15 @@ GRANT ALL ON SCHEMA inventory TO postgres;
 CREATE EXTENSION IF NOT EXISTS citext;
 
 CREATE TYPE country_enum AS ENUM(
-	IND,
-	NZL,
-	UAE,
-	DE,
-	USA,
-	AT,
-	FRA,
-	ITA,
-	ROU
+	'IND',
+	'NZL',
+	'UAE',
+	'DE',
+	'USA',
+	'AT',
+	'FRA',
+	'ITA',
+	'ROU'
 );
 
 CREATE TABLE IF NOT EXISTS inventory.location(
