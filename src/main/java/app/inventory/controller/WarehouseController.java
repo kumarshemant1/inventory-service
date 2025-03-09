@@ -67,6 +67,9 @@ public class WarehouseController {
 				.body(response);
 	}
 
+	/*
+	 * if the case is @RequestParam(value = "l", required = false) Integer limit, Spring will now look for a query parameter named "l" in the URL. The limit variable will be assigned the value of the "l" parameter. If the URL is "/fetch?l=20", limit will be assigned the value 20.
+	 */
 	@GetMapping(path = "/fetch")
 	public String getByPage(@RequestParam(value = "page", defaultValue = "2") int page, 
 			@RequestParam(value = "limit", required = false) Integer limit) {
