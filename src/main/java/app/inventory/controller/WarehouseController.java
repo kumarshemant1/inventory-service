@@ -47,6 +47,14 @@ public class WarehouseController {
 				.status(HttpStatus.OK)
 				.body(response);
 	}
+	
+	@GetMapping
+	public ResponseEntity<List<Warehouse>> getWarehouses() {
+		List<Warehouse> response = warehouseService.getWarehouses();
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(response);
+	}
 
 	@PutMapping(path = "/{warehouseId}")
 	public ResponseEntity<Warehouse> updateWarehouse(@PathVariable Long warehouseId, @RequestBody @Valid Warehouse warehouse) {

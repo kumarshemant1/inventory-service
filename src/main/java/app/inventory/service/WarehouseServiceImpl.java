@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import app.inventory.dao.WarehouseRepository;
+import app.inventory.entity.Country;
+import app.inventory.entity.Location;
 import app.inventory.entity.Warehouse;
 import app.inventory.exception.WarehouseNotFoundException;
 import jakarta.validation.constraints.NotEmpty;
@@ -50,5 +52,10 @@ public class WarehouseServiceImpl implements WarehouseService {
 	@Override
 	public Integer deleteWarehouses(@NotEmpty List<Long> warehouseIds) {
 		return warehouseRepository.deleteByWarehouseIdIn(warehouseIds);
+	}
+
+	@Override
+	public List<Warehouse> getWarehouses() {
+		return warehouseRepository.findAll();
 	}
 }

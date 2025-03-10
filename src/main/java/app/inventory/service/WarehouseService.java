@@ -15,4 +15,6 @@ public interface WarehouseService {
 	Warehouse updateWarehouse(@NotNull Warehouse warehouse);
 	
 	Integer deleteWarehouses(@NotEmpty List<Long> warehouseIds);
+
+	List<Warehouse> getWarehouses();
 }
