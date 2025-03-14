@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import app.inventory.entity.Warehouse;
 import app.inventory.exception.WarehouseIdMismatchException;
 import app.inventory.service.WarehouseService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
@@ -82,5 +83,12 @@ public class WarehouseController {
 	public String getByPage(@RequestParam(value = "page", defaultValue = "2") int page, 
 			@RequestParam(value = "limit", required = false) Integer limit) {
 		return "Values are page : " + page + ", limit : " + limit;
+	}
+	
+	@GetMapping(path = "/servlet")
+	public String fetchServlet(HttpServletRequest httpServletRequest) {
+		return "Session ID : " + httpServletRequest.getSession().getId() + 
+				" Protocol : " + httpServletRequest.getProtocol() + 
+				" AuthType : " + httpServletRequest.getAuthType();
 	}
 }
